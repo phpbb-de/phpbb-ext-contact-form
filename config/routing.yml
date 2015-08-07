@@ -1,0 +1,6 @@
+phpbbde_contactform_main_controller:
+    pattern: /contact/
+    defaults: { _controller: phpbbde.contactform.controller.main:process, mode: "" }
+phpbbde_contactform_controller:
+    pattern: /contact/{mode}
+    defaults: { _controller: phpbbde.contactform.controller.main:process, mode: "" }

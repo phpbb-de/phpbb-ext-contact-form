@@ -1,0 +1,26 @@
+services:
+    phpbbde.contactform.controller.main:
+        class: phpbbde\contactform\controller\main
+        arguments:
+            - @auth
+            - @cache
+            - @config
+            - @request
+            - @dbal.conn
+            - @template
+            - @user
+            - @controller.helper
+            - @captcha.factory
+            - %core.root_path%
+            - %core.php_ext%
+    phpbbde.contactform.base_listener:
+        class: phpbbde\contactform\event\base_events
+        arguments:
+            - @auth
+            - @template
+            - @controller.helper
+            - @user
+            - %core.root_path%
+            - %core.php_ext%
+        tags:
+            - { name: event.listener }
