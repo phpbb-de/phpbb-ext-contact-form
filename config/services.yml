@@ -16,6 +16,9 @@ services:
     phpbbde.contactform.base_listener:
         class: phpbbde\contactform\event\base_events
         arguments:
+            - @dbal.conn
+            - @request
+            - @config
             - @auth
             - @template
             - @controller.helper

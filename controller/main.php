@@ -85,11 +85,14 @@ class main
 
 	public function process($mode)
 	{
+		$REPLIED_PREFIX = '[Beantwortet]';
 		$user = $this->user;
 		$auth = $this->auth;
 		$db = $this->db;
 		$template = $this->template;
 		$request = $this->request;
+		$phpEx = $this->php_ext;
+		$phpbb_root_path = $this->root_path;
 
 		// User has to be logged in to use the kontaktformular
 		if (!$user->data['is_registered'])
@@ -103,6 +106,8 @@ class main
 			trigger_error('KONTAKT_DISABLED');
 		}
 
+		$user->add_lang('posting');
+
 		if ($mode == 'reply')
 		{
 			// Check Auth:
@@ -114,6 +119,11 @@ class main
 			{
 				$post_id = intval($request->variable('p',0));
 				$post = post::get($post_id);
+
+				if(!$post)
+				{
+					trigger_error('NO_POST');
+				}
 
 				// First check if the post has already been approved or denied:
 				if (strpos($post->post_subject, $REPLIED_PREFIX) !== false)
@@ -146,7 +156,7 @@ class main
 
 					// Now edit the post and post a reply:
 
-					$reply_link = ($this->helper->route('phpbbde_contactform_controller', array('mode' => 'reply', 'p' => $post->post_id), true, '', Symfony\Component\Routing\Generator\UrlGeneratorInterface::ABSOLUTE_URL));
+					$reply_link = ($this->helper->route('phpbbde_contactform_controller', array('mode' => 'reply', 'p' => $post->post_id), true, '', \Symfony\Component\Routing\Generator\UrlGeneratorInterface::ABSOLUTE_URL));
 					$search = sprintf($user->lang['KONTAKT_REPLY_LINK'], $reply_link);
 					$post->post_text = html_entity_decode($post->post_text, ENT_NOQUOTES, 'utf-8'); // weil wir den Text nicht in ein Formular packen sondern intern verwenden muss noch der Entitymist weg
 					$post->post_text = str_replace($search, '', $post->post_text);
@@ -157,13 +167,14 @@ class main
 					// Generate the reply post
 					$reply = new post();
 					$reply->topic_id = $post->topic_id;
+					$reply->forum_id = $post->forum_id;
 					$reply->post_text = sprintf($author_anonymous ? $user->lang['KONTAKT_REPLIED_ANONYMOUS_POST_TEXT'] : $user->lang['KONTAKT_REPLIED_POST_TEXT'], $reply_message, $post->post_id);
 					$reply->post_subject = $author_anonymous ? $user->lang['KONTAKT_REPLIED_ANONYMOUS_POST_SUBJECT'] : $user->lang['KONTAKT_REPLIED_POST_SUBJECT'];
 					$reply->submit();
 
 					if(!$author_anonymous) {
 						// Inform the user:
-						$rueckfrage_link = ($this->helper->route('phpbbde_contactform_main_controller', array('ref' => $post->post_id), true, '', Symfony\Component\Routing\Generator\UrlGeneratorInterface::ABSOLUTE_URL));
+						$rueckfrage_link = ($this->helper->route('phpbbde_contactform_main_controller', array('ref' => $post->topic_id), true, '', \Symfony\Component\Routing\Generator\UrlGeneratorInterface::ABSOLUTE_URL));
 						$pm = new privmsg();
 						$pm->message_subject = $user->lang['KONTAKT_PM_REPLY_SUBJECT'];
 						$pm->message_text = sprintf($user->lang['KONTAKT_PM_REPLY_TEXT'], $subject, $post->post_text, $reply_message, $rueckfrage_link);
@@ -177,7 +188,7 @@ class main
 				}
 				else
 				{
-					confirm_box(false, 'KONTAKT_REPLY', '', 'phpbbde/kontakt_reply.html');
+					confirm_box(false, 'KONTAKT_REPLY', '', 'kontakt_reply.html');
 				}
 
 				// Nothing done: return to topic
@@ -195,6 +206,7 @@ class main
 		$ref_topic = null;
 		if($ref) {
 			$ref_topic = topic::get($ref);
+
 			//Da wir nur mit den Standard phpBB Tabellen+Spalten arbeiten, müssen wir prüfen,
 			//ob das Thema im Kontaktformular-Forum ist, damit der Benutzer über dieses Formular
 			//nicht einfach auf beliebige Themen antworten kann
@@ -256,7 +268,7 @@ class main
 				$post->submit();
 
 				// Now we have to edit the post to add the necessary links for approving or denying topics
-				$reply_link = ($this->helper->route('phpbbde_contactform_controller', array('mode' => 'reply', 'p' => $post->post_id), true, '', Symfony\Component\Routing\Generator\UrlGeneratorInterface::ABSOLUTE_URL));
+				$reply_link = ($this->helper->route('phpbbde_contactform_controller', array('mode' => 'reply', 'p' => $post->post_id), true, '', \Symfony\Component\Routing\Generator\UrlGeneratorInterface::ABSOLUTE_URL));
 				$post->post_text .= "\n\n" . sprintf($user->lang['KONTAKT_REPLY_LINK'], $reply_link);
 				$post->submit();
 
@@ -307,7 +319,7 @@ class main
 			'S_HIDDEN_FIELDS'   => $ref_topic ? '<input type="hidden" name="ref" value="' . $ref_topic->topic_id . '"/>' : '',
 		));
 
-		return $this->helper->render('kontakt_body.html', $user->lang['KONTAKT_FORM']);
+		return $this->helper->render('kontakt_body.html', $user->lang['KONTAKT_TITLE']);
 	}
 
 

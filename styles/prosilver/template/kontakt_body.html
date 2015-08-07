@@ -1,0 +1,61 @@
+<!-- INCLUDE overall_header.html -->
+
+<script type="text/javascript">
+// <![CDATA[
+	onload_functions.push('apply_onkeypress_event()');
+// ]]>
+</script>
+
+<h2><a href="{U_KONTAKT}">{L_KONTAKT_TITLE}</a></h2>
+<div class="rules">
+	<div class="inner"><span class="corners-top"><span></span></span>
+	
+	{L_KONTAKT_RULES}
+	
+	<span class="corners-bottom"><span></span></span></div>
+</div>
+
+<form id="postform" method="post" action="{S_POST_ACTION}"{S_FORM_ENCTYPE}>
+<div class="panel" id="postingbox">
+	<div class="inner"><span class="corners-top"><span></span></span>
+	
+	<h3>{SUBTITLE}</h3>
+	
+	<fieldset class="fields1">
+		<!-- IF ERROR --><p class="error">{ERROR}</p><!-- ENDIF -->
+		<!-- IF REF_TOPIC -->
+		<dl>
+			<dt><label>{L_REF_TOPIC}:</label></dt>
+			<dd>{REF_TOPIC}</dd>
+		</dl>
+		<!-- ELSE -->
+		<dl>
+			<dt><label for="subject">{L_SUBJECT}:</label></dt>
+			<dd><input type="text" name="subject" id="subject" size="40" maxlength="46" value="{SUBJECT}" class="inputbox autowidth" /></dd>
+		</dl>
+		<!-- ENDIF -->
+
+	
+		<!-- INCLUDE posting_buttons.html -->
+		<div id="message-box">
+			<textarea name="message" id="message" rows="15" cols="76" tabindex="4" onselect="storeCaret(this);" onclick="storeCaret(this);" onkeyup="storeCaret(this);" onfocus="initInsertions();" class="inputbox">{MESSAGE}</textarea>
+		</div>
+	</fieldset>
+	
+	<span class="corners-bottom"><span></span></span></div>
+	
+</div>
+	<div class="panel bg2">
+		<div class="inner"><span class="corners-top"><span></span></span>
+		<fieldset class="submit-buttons">
+			{S_HIDDEN_FIELDS}
+			<input type="reset" value="{L_RESET}" name="reset" class="button2" />&nbsp;
+			<input type="submit" accesskey="s" tabindex="6" name="submit" value="{L_SUBMIT}" class="button1" />&nbsp;
+
+		</fieldset>
+
+		<span class="corners-bottom"><span></span></span></div>
+	</div>
+
+</form>
+<!-- INCLUDE overall_footer.html -->
