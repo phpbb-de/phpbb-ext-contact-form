@@ -1,30 +1,39 @@
 {
-	"name": "phpbbde/contactform",
-	"type": "phpbb-extension",
-	"description": "Provides an enhanced contact form creating posts in a specified forum for each contact.",
-	"homepage": "https://www.phpbb.de/community/",
-	"version": "1.0.0-dev",
-	"time": "2015-01-03",
-	"license": "GPL-2.0",
-	"authors": [
-		{
-			"name": "Martin Beckmann",
-			"email": "gn#36@phpbb.de",
-			"homepage": "https://www.phpbb.de/",
-			"role": "Lead Developer"
+	"name" : "phpbbde/contactform",
+	"type" : "phpbb-extension",
+	"description" : "Provides an enhanced contact form creating posts in a specified forum for each contact.",
+	"homepage" : "https://www.phpbb.de/community/",
+	"version" : "1.0.0-dev",
+	"time" : "2015-01-03",
+	"license" : "GPL-2.0",
+	"authors" : [{
+			"name" : "Martin Beckmann",
+			"email" : "gn#36@phpbb.de",
+			"homepage" : "https://www.phpbb.de/",
+			"role" : "Lead Developer"
 		}
 	],
-	"require": {
-		"php": ">=5.3.3",
-		"gn36/phpbb-oo-posting-api": "dev-master"
+	"require" : {
+		"php" : ">=5.3.3",
+		"gn36/phpbb-oo-posting-api" : "dev-master"
 	},
-	"require-dev": {
-		"phpbb/epv": "dev-master"
+	"require-dev" : {
+		"phpbb/epv" : "dev-master"
 	},
-	"extra": {
-		"display-name": "phpBB.de - Contact Form",
-		"soft-require": {
-			"phpbb/phpbb": ">=3.1.2,<3.2.*@dev"
+	"extra" : {
+		"display-name" : "phpBB.de - Contact Form",
+		"soft-require" : {
+			"phpbb/phpbb" : ">=3.1.2,<3.2.*@dev"
 		}
-	}
+	},
+	"support" : {
+		"issues" : "https://github.com/phpbb-de/phpbb-ext-contact-form/issues",
+		"forum" : "https://www.phpbb.de/community/",
+		"source" : "https://github.com/phpbb-de/phpbb-ext-contact-form"
+	},
+	"keywords" : [
+		"phpbb",
+		"contactform",
+		"posting"
+	]
 }
