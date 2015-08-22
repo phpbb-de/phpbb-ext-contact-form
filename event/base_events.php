@@ -80,7 +80,7 @@ class base_events implements EventSubscriberInterface
 
 	public function page_header_after($event)
 	{
-		if(!empty($this->config['phpbbde_contactform_forum_id']))
+		if (!empty($this->config['phpbbde_contactform_forum_id']))
 		{
 			$this->user->add_lang_ext('phpbbde/contactform', 'global');
 
@@ -114,9 +114,9 @@ class base_events implements EventSubscriberInterface
 		// This also has the drawback of still showing the warning even if the user is currently deleted.
 		// So let's remove the deleted user from the list as well:
 		$delete = $this->request->variable('remove_u', array(0 => ''));
-		foreach($delete as $key => $value)
+		foreach ($delete as $key => $value)
 		{
-			if(isset($address_list['u'][$key]))
+			if (isset($address_list['u'][$key]))
 			{
 				unset($address_list['u'][$key]);
 			}
@@ -124,7 +124,7 @@ class base_events implements EventSubscriberInterface
 
 		//Wenn PN an Teammitglied gesendet werden soll, Hinweismeldung anzeigen
 		//TODO: Etwas besseres als Referenz nehmen als "phpBB.de-Team" im Gruppennamen.
-		if(!empty($address_list['u'])) {
+		if (!empty($address_list['u'])) {
 			$sql = "SELECT u.user_id, ut.username
 				FROM " . USER_GROUP_TABLE . " u
 				LEFT JOIN " . GROUPS_TABLE . " g ON g.group_id = u.group_id
@@ -139,7 +139,7 @@ class base_events implements EventSubscriberInterface
 				$team_user_names[$row['user_id']] = $row['username'];
 			}
 
-			if(count(array_intersect(array_keys($address_list['u']), $team_user_ids)) > 0)
+			if (count(array_intersect(array_keys($address_list['u']), $team_user_ids)) > 0)
 			{
 				$this->template->assign_var('S_PN_TO_TEAM_MEMBER', true);
 				return;
@@ -148,12 +148,12 @@ class base_events implements EventSubscriberInterface
 			// This is only necessary, if we didn't find a member yet.
 			$new_recipients = explode("\n", $this->request->variable('username_list', '', true));
 
-			if(sizeof($team_user_names) < sizeof($new_recipients))
+			if (sizeof($team_user_names) < sizeof($new_recipients))
 			{
 				$new_recipients = array_map('trim', $new_recipients);
-				foreach($team_user_names as $username)
+				foreach ($team_user_names as $username)
 				{
-					if(in_array($username, $new_recipients))
+					if (in_array($username, $new_recipients))
 					{
 						$this->template->assign_var('S_PN_TO_TEAM_MEMBER', true);
 						return;
@@ -162,9 +162,9 @@ class base_events implements EventSubscriberInterface
 			}
 			else
 			{
-				foreach($new_recipients as $username)
+				foreach ($new_recipients as $username)
 				{
-					if(in_array(trim($username), $team_user_names))
+					if (in_array(trim($username), $team_user_names))
 					{
 						$this->template->assign_var('S_PN_TO_TEAM_MEMBER', true);
 						return;

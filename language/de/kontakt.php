@@ -68,6 +68,3 @@ Grund:
 ',
 	'AUTHOR_ANONYMOUS_WARNING' => '<strong>Achtung:</strong> Der Autor der Anfrage ist der Gast-Benutzer. Die hier eingegebene Antwort wird daher nur im internen Thema gepostet und keine PN verschickt!',
 ));
-
-
-?>

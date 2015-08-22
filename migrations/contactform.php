@@ -39,7 +39,7 @@ class contactform extends \phpbb\db\migration\migration
 		$result = $this->db->sql_query($sql);
 		$forum_id = $this->db->sql_fetchfield('forum_id');
 		$this->db->sql_freeresult($result);
-		if($forum_id)
+		if ($forum_id)
 		{
 			$this->config->set('phpbbde_contactform_forum_id', $forum_id);
 		}

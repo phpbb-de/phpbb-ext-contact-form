@@ -10,13 +10,9 @@
 
 namespace phpbbde\contactform\controller;
 
-use Symfony\Component\HttpFoundation\Response;
 use Gn36\OoPostingApi\post;
 use Gn36\OoPostingApi\topic;
 use Gn36\OoPostingApi\privmsg;
-
-
-include __DIR__ . '/../vendor/autoload.php';
 
 class main
 {
@@ -67,6 +63,8 @@ class main
 	 */
 	public function __construct(\phpbb\auth\auth $auth, \phpbb\cache\service $cache, \phpbb\config\config $config, \phpbb\request\request $request, \phpbb\db\driver\driver_interface $db, \phpbb\template\template $template, \phpbb\user $user, \phpbb\controller\helper $helper, \phpbb\captcha\factory $captcha_factory, $root_path, $php_ext)
 	{
+		include __DIR__ . '/../vendor/autoload.php';
+
 		$this->auth = $auth;
 		$this->cache = $cache;
 		$this->config = $config;
@@ -120,7 +118,7 @@ class main
 				$post_id = intval($request->variable('p',0));
 				$post = post::get($post_id);
 
-				if(!$post)
+				if (!$post)
 				{
 					trigger_error('NO_POST');
 				}
@@ -172,7 +170,8 @@ class main
 					$reply->post_subject = $author_anonymous ? $user->lang['KONTAKT_REPLIED_ANONYMOUS_POST_SUBJECT'] : $user->lang['KONTAKT_REPLIED_POST_SUBJECT'];
 					$reply->submit();
 
-					if(!$author_anonymous) {
+					if (!$author_anonymous)
+					{
 						// Inform the user:
 						$rueckfrage_link = ($this->helper->route('phpbbde_contactform_main_controller', array('ref' => $post->topic_id), true, '', \Symfony\Component\Routing\Generator\UrlGeneratorInterface::ABSOLUTE_URL));
 						$pm = new privmsg();
@@ -204,7 +203,8 @@ class main
 		//$reklamation_pn = $request->variable('reklamation_pn', 0);
 
 		$ref_topic = null;
-		if($ref) {
+		if ($ref)
+		{
 			$ref_topic = topic::get($ref);
 
 			//Da wir nur mit den Standard phpBB Tabellen+Spalten arbeiten, müssen wir prüfen,
@@ -249,10 +249,10 @@ class main
 				$post = new post();
 				$post->forum_id = $this->config['phpbbde_contactform_forum_id'];
 				$post->post_text = $message;
-				if($ref_topic)
+				if ($ref_topic)
 				{
 					$ref_title_no_prefix = $ref_topic->topic_title;
-					if(strpos($ref_title_no_prefix, $REPLIED_PREFIX) === 0) {
+					if (strpos($ref_title_no_prefix, $REPLIED_PREFIX) === 0) {
 						$ref_title_no_prefix = substr($ref_title_no_prefix, strlen($REPLIED_PREFIX));
 					}
 					$post->post_subject = 'Re: ' . $ref_title_no_prefix;
@@ -272,7 +272,7 @@ class main
 				$post->post_text .= "\n\n" . sprintf($user->lang['KONTAKT_REPLY_LINK'], $reply_link);
 				$post->submit();
 
-				if($ref_topic && strpos($ref_topic->topic_title, $REPLIED_PREFIX) === 0)
+				if ($ref_topic && strpos($ref_topic->topic_title, $REPLIED_PREFIX) === 0)
 				{
 					//Bei Antwort ggf. den [Beantwortet] Prefix entfernen
 					$sql = 'UPDATE ' . TOPICS_TABLE . ' SET ';
@@ -289,7 +289,7 @@ class main
 				trigger_error($message);
 			}
 		}
-		elseif($reklamation_post)
+		elseif ($reklamation_post)
 		{
 			$template->assign_var('SUBJECT', substr($reklamation_titel, 0, 46));
 			$template->assign_var('MESSAGE', sprintf($user->lang['REKLAMATION_POST_MESSAGE'], generate_board_url() . "/viewtopic.$phpEx?p=" . $reklamation_post . '#p' . $reklamation_post, $reklamation_titel));
@@ -297,9 +297,11 @@ class main
 
 		//Benutzer soll [Beantwortet] nicht sehen
 		$ref_topic_title_no_prefix = false;
-		if($ref_topic) {
+		if ($ref_topic)
+		{
 			$ref_topic_title_no_prefix = $ref_topic->topic_title;
-			if(strpos($ref_topic_title_no_prefix, $REPLIED_PREFIX) === 0) {
+			if (strpos($ref_topic_title_no_prefix, $REPLIED_PREFIX) === 0)
+			{
 				$ref_topic_title_no_prefix = substr($ref_topic_title_no_prefix, strlen($REPLIED_PREFIX));
 			}
 		}
