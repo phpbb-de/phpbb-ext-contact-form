@@ -210,11 +210,11 @@ class main
 			//Da wir nur mit den Standard phpBB Tabellen+Spalten arbeiten, müssen wir prüfen,
 			//ob das Thema im Kontaktformular-Forum ist, damit der Benutzer über dieses Formular
 			//nicht einfach auf beliebige Themen antworten kann
-			if(!$ref_topic || $ref_topic->forum_id != $this->config['phpbbde_contactform_forum_id']) {
+			if (!$ref_topic || $ref_topic->forum_id != $this->config['phpbbde_contactform_forum_id'])
+			{
 				trigger_error('INVALID_REF_TOPIC');
 			}
 		}
-
 
 		// Check sent data
 		if ($submit)
@@ -252,7 +252,8 @@ class main
 				if ($ref_topic)
 				{
 					$ref_title_no_prefix = $ref_topic->topic_title;
-					if (strpos($ref_title_no_prefix, $REPLIED_PREFIX) === 0) {
+					if (strpos($ref_title_no_prefix, $REPLIED_PREFIX) === 0)
+					{
 						$ref_title_no_prefix = substr($ref_title_no_prefix, strlen($REPLIED_PREFIX));
 					}
 					$post->post_subject = 'Re: ' . $ref_title_no_prefix;
@@ -289,7 +290,7 @@ class main
 				trigger_error($message);
 			}
 		}
-		elseif ($reklamation_post)
+		else if ($reklamation_post)
 		{
 			$template->assign_var('SUBJECT', substr($reklamation_titel, 0, 46));
 			$template->assign_var('MESSAGE', sprintf($user->lang['REKLAMATION_POST_MESSAGE'], generate_board_url() . "/viewtopic.$phpEx?p=" . $reklamation_post . '#p' . $reklamation_post, $reklamation_titel));

@@ -124,7 +124,8 @@ class base_events implements EventSubscriberInterface
 
 		//Wenn PN an Teammitglied gesendet werden soll, Hinweismeldung anzeigen
 		//TODO: Etwas besseres als Referenz nehmen als "phpBB.de-Team" im Gruppennamen.
-		if (!empty($address_list['u'])) {
+		if (!empty($address_list['u']))
+		{
 			$sql = "SELECT u.user_id, ut.username
 				FROM " . USER_GROUP_TABLE . " u
 				LEFT JOIN " . GROUPS_TABLE . " g ON g.group_id = u.group_id
