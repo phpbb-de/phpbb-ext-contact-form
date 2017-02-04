@@ -4,3 +4,9 @@ phpbbde_contactform_main_controller:
 phpbbde_contactform_controller:
     pattern: /contact/{mode}
     defaults: { _controller: phpbbde.contactform.controller.main:process, mode: "" }
+phpbbde_contactform_phpbbde_main_route:
+    pattern: /phpbbde/kontakt/
+    defaults: { _controller: phpbbde.contactform.controller.main:process, mode: "" }
+phpbbde_contactform_phpbbde_route:
+    pattern: /phpbbde/kontakt/{mode}
+    defaults: { _controller: phpbbde.contactform.controller.main:process, mode: "" }
