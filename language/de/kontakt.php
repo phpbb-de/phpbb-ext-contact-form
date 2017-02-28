@@ -30,7 +30,7 @@ $lang = array_merge($lang, array(
 						<ul>
 							<li>Supportanfragen aller Art - diese ausnahmslos im Forum stellen</li>
 							<li>Regelverstöße von anderen Benutzern - hierzu bitte die Funktion "Beitrag melden" benutzen</li>
-							<li>Fehler auf der Website phpBB.de (ausgenommen Sicherheitslücken) bitte im <a href="/community/viewtopic.php?f=19&t=183140">Sammel-Thread für Fehler in phpBB.de 3.0</a> melden</li>
+							<li>Fehler auf der Website phpBB.de (ausgenommen Sicherheitslücken) bitte im <a href="/community/viewtopic.php?f=19&t=239117">Sammel-Thread für Fehler in phpBB.de 3.1</a> melden</li>
 							<li>Fehler in den deutschen Sprachdateien bitte im Thema <a href="/community/viewtopic.php?f=73&t=148593">Fehler in den deutschen Sprachpaketen</a> melden</li>
 						</ul>',
 	'KONTAKT_REPLY_LINK' => "_________________________\n" .
