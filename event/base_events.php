@@ -24,7 +24,7 @@ class base_events implements EventSubscriberInterface
 		return array(
 			'core.page_header_after'				=> 'page_header_after',
 			'core.viewonline_overwrite_location' 	=> 'viewonline_page',
-			'core.ucp_pm_compose_modify_data' 		=> 'pm_warning',
+			'core.ucp_pm_compose_modify_data'		=> 'pm_warning',
 		);
 	}
 
@@ -107,9 +107,18 @@ class base_events implements EventSubscriberInterface
 	{
 		// There is no suitable event - read the data from the submit:
 		$address_list = $this->request->variable('address_list', array('' => array(0 => '')));
+		if (!isset($address_list['u']))
+		{
+			$address_list['u'] = array();
+		}
 
 		// This has the drawback of not knowing about new users currently being added
 		// We therefore will have to check the added recipients list for known usernames as well :/
+		$add = $this->request->variable('username_list', '');
+		$usernames = explode("\n", $add);
+		$user_id_ary = array();
+		user_get_id_name($user_id_ary, $usernames, array(USER_NORMAL, USER_FOUNDER, USER_INACTIVE));
+		$address_list['u'] = array_merge($address_list['u'], $user_id_ary);
 
 		// This also has the drawback of still showing the warning even if the user is currently deleted.
 		// So let's remove the deleted user from the list as well:
