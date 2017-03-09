@@ -18,7 +18,7 @@
 		"gn36/phpbb-oo-posting-api" : "dev-master"
 	},
 	"require-dev" : {
-		"phpbb/epv" : "dev-master"
+		"phpbb/epv" : ">=0.0.3"
 	},
 	"extra" : {
 		"display-name" : "phpBB.de - Contact Form",
