@@ -118,7 +118,23 @@ class base_events implements EventSubscriberInterface
 		$usernames = explode("\n", $add);
 		$user_id_ary = array();
 		user_get_id_name($user_id_ary, $usernames, array(USER_NORMAL, USER_FOUNDER, USER_INACTIVE));
-		$address_list['u'] = array_merge($address_list['u'], $user_id_ary);
+		foreach ($user_id_ary as $uid)
+		{
+			$address_list['u'][$uid] = 'to';
+		}
+
+		// Also catch entries added from friends list:
+		$friend_list = ($this->request->variable('add_to', array(0)));
+		foreach ($friend_list as $key => $value)
+		{
+			$address_list['u'][$key] = $value;
+		}
+
+		$friend_list = ($this->request->variable('add_bcc', array(0)));
+		foreach ($friend_list as $key => $value)
+		{
+			$address_list['u'][$key] = $value;
+		}
 
 		// This also has the drawback of still showing the warning even if the user is currently deleted.
 		// So let's remove the deleted user from the list as well:
